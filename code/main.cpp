@@ -26,18 +26,21 @@ void mu_sweep(){
 
   fermion_params fp(
     1, //site_dof
-    1.0/3.0, //filling
-    0.1, //j
-    0.0, //u
-    1.0, //v
-    0.0, //gamma 
-    2.0, //q_scr
-    1.0/0.6 //beta //not bad: 1.0/1.5
+    1.0/3.0, //filling (not used)
+    0.1, //j (hopping)
+    0.0, //u (onsite interaction)
+    1.0, //v (nearest-neighbor interaction)
+    0.0, //gamma (not used)
+    2.0, //q_scr (not used)
+    1.0/0.6 //beta (inverse temperatre)
   );
+  //range of chemical potentials
+  ScalarType mu_start = 0.0;
+  ScalarType mu_stop = 7.0;
 
   tVModel f_mod(lp.ltype, lp.bcond, lp.N, fp.j, fp.v, fp.g);
 
-  simulation_params sp(
+  simulation_params sp(//these parameters are not relevant
     1, //n_cool
     1, //m (aacc)
     1.0, //alpha (aacc)
@@ -45,10 +48,10 @@ void mu_sweep(){
     1.0, //t_end
     1.0, //t0_trap
     1.0, // tau_trap
-    1.0, //t0_res
-    1.0, //tau_res
-    1.0, //del_t
-    1.0, //atol
+    1.0, //t0_res 
+    1.0, //tau_res 
+    1.0, //del_t 
+    1.0, //atol 
     1.0, //rtol
     1.0 //max_stepsize
   );
@@ -87,8 +90,6 @@ void mu_sweep(){
   std::random_device rd;//change the seed of srand such that eigen3s ::Random produces different matrices each run
   std::srand(rd());//now you can see shifted Wigner Crystals 
 
-  ScalarType mu_start = 0.0;
-  ScalarType mu_stop = 7.0;
   int N_mu = 50;
   VectorType temp = VectorType::LinSpaced(N_mu, mu_start, mu_stop);
   std::vector<ScalarType> mus(temp.data(), temp.data()+N_mu);
@@ -192,24 +193,24 @@ void solve_bfKBE_markov(int idx, std::string folder){
   );
   boson_params bp(
     2, //site dof
-    11.0, //Np
+    11.0, //Np (not used)
     1.0, //j
     0.1, //u
     0.12, //v
     0.1, //gamma
     3.0, //p
-    4.0, //rt
-    1e3, //ut
-    1.0 //beta
+    4.0, //rt (radius of the trap)
+    1e3, //ut (not used)
+    1.0 //beta (not used)
   );
   
-  const MatrixType j{{bp.j/10.0,0},{0,bp.j}};
-  const MatrixType u{{bp.u,bp.u},{bp.u,bp.u}};
-  const MatrixType v{{bp.v,bp.v},{bp.v,bp.v}};
-  const MatrixType g{{bp.g,0},{0,3*bp.g}};
-  const VectorType delta{{0.0, 20.0}};
-  const ScalarType J_12 = 1.0*bp.j;
-  const ScalarType U_xe = 20.0;
+  const MatrixType j{{bp.j/10.0,0},{0,bp.j}}; //intra-band hopping 
+  const MatrixType u{{bp.u,bp.u},{bp.u,bp.u}}; //exciton-exciton onsite interaction
+  const MatrixType v{{bp.v,bp.v},{bp.v,bp.v}}; //exciton-exciton dipole-dipole interaction
+  const MatrixType g{{bp.g,0},{0,3*bp.g}}; //reservoir broadenings
+  const VectorType delta{{0.0, 20.0}};  //energy shift of the bands
+  const ScalarType J_12 = 1.0*bp.j; //inter-band hopping
+  const ScalarType U_xe = 20.0; //exciton-electron onsite interaction
   
 
   bHubbardModel b_mod(lp.ltype, lp.bcond, lp.N, j, delta, u, v, g, static_cast<int>(bp.p), bp.rt, bp.ut);
@@ -220,18 +221,18 @@ void solve_bfKBE_markov(int idx, std::string folder){
   }
 
   simulation_params sp(
-    1, //n_cool
-    6, //m (aacc)
+    1, //n_cool (not used)
+    6, //m (aacc) (not used)
     0.3/bp.j, //alpha (aacc)
-    0.0/bp.j, //t0
-    3.0/bp.j, //t_end
-    -100.0/bp.j, //t0_trap
-    1.0/bp.j, // tau_trap
-    std::numeric_limits<ScalarType>::quiet_NaN(), //t0_res
-    std::numeric_limits<ScalarType>::quiet_NaN(), //tau_res
-    100.0/bp.j, //del_t
+    0.0/bp.j, //t0 (starting time of the time-evolution)
+    3.0/bp.j, //t_end (ending time of the time-evolution)
+    -100.0/bp.j, //t0_trap (not used)
+    1.0/bp.j, // tau_trap (not used)
+    std::numeric_limits<ScalarType>::quiet_NaN(), //t0_res (not used)
+    std::numeric_limits<ScalarType>::quiet_NaN(), //tau_res (not used)
+    100.0/bp.j, //del_t (not used)
     1e-4, //atol
-    1e-4, //rtol,
+    1e-4, //rtol
     0.1 //max_stepsize
   );
   fermion_params fp(1,1.0,1.0,1.0,1.0,1.0,1.0,1.0);

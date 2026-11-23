@@ -516,8 +516,8 @@ def plot_diam_heatmap(
 
     t_min = 0.0
     t_max = times[0][-1]
-    x_min = fills[0]
-    x_max = fills[-1]
+    x_min = 0.55#fills[0]
+    x_max = 0.85#fills[-1]
 
     # --- interpolate every trajectory onto a common time grid ---
     n_time_pts = 400
@@ -679,7 +679,7 @@ def plot_configuration(ax, idx, x, y, n, cmap, norm, marker_size):
  
 def phase_analysis(
     subfolder="",
-    filename="f_occs.txt",
+    filename="f_occs.txt", #The C++ code does not immediately produce the "f_occs.txt" file. Use the convert_GtoOcc() function to obtain it.  
     filename_meta="f_meta.txt",
     filename_musnus="mus_nus.txt",
     save_path=None,
@@ -750,11 +750,10 @@ def phase_analysis(
 
 # convert_GtoOcc()
 
-plot_occ_trajectory()
-plot_diam_trajectory()
 plot_diam_heatmap()
+plot_diam_trajectory()
 phase_analysis()
-
+plot_occ_trajectory()
 
 
 plt.show()

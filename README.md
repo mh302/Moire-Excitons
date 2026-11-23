@@ -1,7 +1,7 @@
 # Moire-Excitons
 
 Code accompanying the theoretical modeling in: 
-Deng et al., "Correlation-Driven Ballistic Exciton Expansion in a Moiré Bose-Fermi Mixture", ?Journal? (2026). [?link?]
+Deng et al., "Correlation-Driven Ballistic Exciton Expansion in a Moiré Bose-Fermi Mixture", Nature Materials (2026). [?link?]
 
 ## Overview
 The C++ code in `code/` generates the data in `data/`: it first solves the

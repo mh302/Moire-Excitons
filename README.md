@@ -11,11 +11,11 @@ the Keldysh mean-field time evolution of the coupled electron-exciton system.
 The Python script `python_utils/plots.py` reads the data and produces produces the figures of the paper (listed below).
 
 ## C++ dependencies
-Eigen3 - https://libeigen.gitlab.io/
-Boost (odeint, math) - https://www.boost.org/
-OpenMP - https://www.openmp.org/
-GSL - https://www.gnu.org/software/gsl/
-FFTW3 - https://www.fftw.org/
+- [Eigen3](https://libeigen.gitlab.io/)
+- [Boost](https://www.boost.org/) (odeint, math)
+- [OpenMP](https://www.openmp.org/)
+- [GSL](https://www.gnu.org/software/gsl/)
+- [FFTW3](https://www.fftw.org/)
 
 ## Usage
 
@@ -52,7 +52,25 @@ All simulation parameters are hard-coded at the beginning of `mu_sweep()` and
 ## Figures
 | Figure            | Python function          |
 |-------------------|--------------------------|
-| Fig. 3d           | `plot_diam_heatmap()`    |
-| Fig. 3e           | `plot_diam_trajectory()` |
+| Fig. 3d*          | `plot_diam_heatmap()`    |
+| Fig. 3e*          | `plot_diam_trajectory()` |
 | Ext. Data Fig. 9a | `phase_analysis()`       |
 | Ext. Data Fig. 9b | `plot_occ_trajectory()`  |
+
+**\*Note:** 
+For Fig. 3d and 3e, the functions above plot the simulated
+data shown in the paper, but do not exactly reproduce the published
+panels. The simulation sweeps the chemical potential, so the resulting
+fillings are not evenly spaced and do not exactly match the fillings of the experimental
+data. To make the qualitative comparison with experiment easier, the published panels
+were processed as follows:
+
+- **Fig. 3d:** data from neighboring fillings was averaged, which
+  smooths the map and mimics the experimental uncertainty in the filling.
+- **Fig. 3e:** the three simulated curves are labeled with the filling
+  values of the corresponding experimental curves. The simulated fillings
+  differ slightly from these labels.
+
+The plotting and data-processing code for the published main-text
+figures was written by J. Peterson and is available upon request from the
+corresponding author L. Huang.

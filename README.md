@@ -1,6 +1,6 @@
 # Moire-Excitons
 
-Code accompanying the theoretical modeling in: 
+Code and data accompanying the theoretical modeling in: 
 Deng et al., "Correlation-Driven Ballistic Exciton Expansion in a Moiré Bose-Fermi Mixture", Nature Materials (2026). [?link?]
 
 ## Overview
